@@ -20,7 +20,11 @@ class MongoPipeline(object):
 
 	def process_item(self, item, spider):
 		try:
-			self.collection.insert(dict(item))
+			newitem = dict(item)
+			del newitem['image_urls']
+			for image in newitem['images']:
+				del image['checksum']
+			self.collection.insert(newitem)
 		except pymongo.errors.DuplicateKeyError:
 			print('duplicateKeyError')
 		return item

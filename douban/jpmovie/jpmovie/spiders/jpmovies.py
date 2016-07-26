@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from scrapy import log
+from scrapy import Request
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from jpmovie.items import JpmovieItem 
@@ -16,6 +16,7 @@ class JpmovieSpider(CrawlSpider):
             Rule(LinkExtractor(restrict_xpaths='//*[@class="next"]')),
         )
 
+
     def zero(self, array):
     	if len(array):
     		return array[0]
@@ -28,7 +29,14 @@ class JpmovieSpider(CrawlSpider):
             se = response.selector
             info = se.xpath('//*[@id="info"]')
             item['title'] = se.xpath('//h1/span[1]/text()').extract()[0]
-            item['cover'] = self.zero(se.xpath('//img[@rel="v:image"]/@src').extract())
+            cover = self.zero(se.xpath('//img[@rel="v:image"]/@src').extract())
+            if cover:
+                cover1 = cover.replace('movie_poster_cover/spst', 'photo/photo')
+                if cover1 == cover:
+                    item['image_urls'] = [cover]
+                else:
+                    item['image_urls'] = [cover1, cover]
+
             item['intro'] = '\n'.join(map(lambda str:str.strip(), se.xpath('//*[@property="v:summary"]/text()').extract()))
             item['directors'] = info.xpath('.//*[@rel="v:directedBy"]/text()').extract()
             item['writers'] = info.xpath('span[2]/span[2]/a/text()').extract()

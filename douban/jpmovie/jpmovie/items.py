@@ -21,4 +21,7 @@ class JpmovieItem(Item):
     alias = Field()
     imdb = Field()
     intro = Field()
+    #download images
+    image_urls = Field()
+    images = Field()
 
