@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from scrapy.http.request import Request
 from scrapy.selector import Selector
 from crawler.items import HentaiItem
