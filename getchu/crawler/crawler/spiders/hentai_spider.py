@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
+rxa# -*- coding: utf-8 -*-
 from scrapy.http.request import Request
 from scrapy.selector import Selector
-from crawler.items import HentaiItem
+from crawler.items import HentaiItemii
 from scrapy import Spider
 
 class HentaiSpider(Spider):
