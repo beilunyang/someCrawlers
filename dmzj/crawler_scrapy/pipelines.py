@@ -132,7 +132,7 @@ class RedisPipeline(object):
       self.client = redis.Redis(connection_pool=pool)
 
    def close_spider(self, spider):
-      self.client.quit()
+      pass
 
    def process_item(self, item, spider):
       if isinstance(item, ChapterItem):
